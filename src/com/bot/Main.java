@@ -13,8 +13,8 @@ public class Main {
     private static ArrayList<Point> points = new ArrayList<Point>();
     public static void createGUI() {
         final JFrame frame = new JFrame("Testframe");
-	    frame.setPreferredSize(new Dimension(700,700));
-	    JPanel panel = new JPanel(new BorderLayout());
+        frame.setPreferredSize(new Dimension(700,700));
+        JPanel panel = new JPanel(new BorderLayout());
         Panel butPanel = new Panel();
         butPanel.setLayout(null);
         butPanel.setPreferredSize(new Dimension(250,700));
@@ -22,12 +22,12 @@ public class Main {
         pointpane.setLayout(null);
         //pointpane.setPreferredSize(new Dimension(350,700));
 
-	    JLabel addPointwithCoords = new JLabel("Добавить точку по координатам");
-	    addPointwithCoords.setBounds(2,2,300,25);
-	    butPanel.add(addPointwithCoords);
-	    JLabel addRandomPoints = new JLabel("Добавить рандомное количество точек");
-	    addRandomPoints.setBounds(2,50,300,25);
-	    butPanel.add(addRandomPoints);
+        JLabel addPointwithCoords = new JLabel("Добавить точку по координатам");
+        addPointwithCoords.setBounds(2,2,300,25);
+        butPanel.add(addPointwithCoords);
+        JLabel addRandomPoints = new JLabel("Добавить рандомное количество точек");
+        addRandomPoints.setBounds(2,50,300,25);
+        butPanel.add(addRandomPoints);
         JLabel X = new JLabel("X:");
         X.setBounds(2,25,15,25);
         butPanel.add(X);
@@ -96,8 +96,92 @@ public class Main {
                 }
             }
         });
+        final JLabel answerL = new JLabel("Ответ:");
+        answerL.setBounds(2,550,300,25);
+        butPanel.add(answerL);
+
         button2.setBounds(2,150,160,40);
         butPanel.add(button2);
+
+        JButton button3 = new JButton("Вывести количество точек");
+        button3.addActionListener(new ActionListener() {
+                                      @Override
+                                      public void actionPerformed(ActionEvent e) {
+                                          public static void main(String args[]) throws IOException {
+                                              BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+                                              ArrayList<Line> lines = new ArrayList<>();
+                                              ArrayList<Point> points = new ArrayList<>();
+                                              String s = in.readLine();
+                                              boolean sameLines = false;
+                                              while(!(s==null || s.equals("stop"))) {
+                                                  StringTokenizer tokenizer = new StringTokenizer(s);
+                                                  Line line = new Line(
+                                                          Double.parseDouble(tokenizer.nextToken()),
+                                                          Double.parseDouble(tokenizer.nextToken()),
+                                                          Double.parseDouble(tokenizer.nextToken())
+                                                  );
+                                                  for (Line line1 : lines) {
+                                                      if(line.isSame(line1)) {
+                                                          sameLines = true;
+                                                          break;
+                                                      }
+                                                  }
+                                                  if(sameLines){
+                                                      System.out.println("INFINITY");
+                                                      break;
+                                                  }
+                                                  lines.add(line);
+                                                  s = in.readLine();
+                                              }
+                                              if(!sameLines){
+                                                  for (Line line1 : lines) {
+                                                      for (Line line2 : lines) {
+                                                          if(line2.isSame(line1)) {
+                                                              break;
+                                                          }
+                                                          Point point = line1.cross(line2);
+                                                          boolean same = false;
+                                                          if(point!=null) {
+                                                              for (Point point1 : points) {
+                                                                  if (point1.isSame(point)) {
+                                                                      same = true;
+                                                                  }
+                                                              }
+                                                              if (!same) {
+                                                                  points.add(point);
+                                                              }
+                                                          }
+                                                      }
+                                                  }
+                                                  System.out.println(points.size());
+                                              }
+                                          }
+
+                                      }
+                                      });
+        button3.setBounds(2,500,200,40);
+        butPanel.add(button3);
+
+        JButton button4 = new JButton("Загрузить из файла");
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
+        button4.setBounds(2,300,200,40);
+        butPanel.add(button4);
+
+        JButton button5 = new JButton("Загрузить в файл");
+        button5.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
+        button5.setBounds(2,350,200,40);
+        butPanel.add(button5);
+
         panel.add(pointpane,BorderLayout.CENTER);
         panel.add(butPanel,BorderLayout.EAST);
         frame.getContentPane().add(panel);
@@ -105,6 +189,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
 
 
     public static void main(String[] args) {

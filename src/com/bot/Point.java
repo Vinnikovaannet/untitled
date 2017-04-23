@@ -18,4 +18,7 @@ public class Point extends JPanel {
         g.fillRect(0,0,3,3);
         g.setColor(Color.red);
     }
+    boolean isSame(Point point) {
+        return (x == point.x && y == point.y);
+    }
 }
