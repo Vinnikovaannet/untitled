@@ -124,6 +124,7 @@ public class Main {
                                 points.add(point);
                             }
                         }
+                        
                     }
                 }
                 System.out.println(points.size());
