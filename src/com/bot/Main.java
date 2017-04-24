@@ -10,68 +10,68 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    private static ArrayList<Point> points = new ArrayList<Point>();
+    private static ArrayList<Point> points = new ArrayList<>();
+    private static ArrayList<Line> lines = new ArrayList<>();
+
     public static void createGUI() {
         final JFrame frame = new JFrame("Testframe");
-        frame.setPreferredSize(new Dimension(700,700));
+        frame.setPreferredSize(new Dimension(700, 700));
         JPanel panel = new JPanel(new BorderLayout());
         Panel butPanel = new Panel();
         butPanel.setLayout(null);
-        butPanel.setPreferredSize(new Dimension(250,700));
-        final Panel pointpane   = new Panel();
+        butPanel.setPreferredSize(new Dimension(250, 700));
+        final Panel pointpane = new Panel();
         pointpane.setLayout(null);
         //pointpane.setPreferredSize(new Dimension(350,700));
 
         JLabel addPointwithCoords = new JLabel("Добавить точку по координатам");
-        addPointwithCoords.setBounds(2,2,300,25);
+        addPointwithCoords.setBounds(2, 2, 300, 25);
         butPanel.add(addPointwithCoords);
         JLabel addRandomPoints = new JLabel("Добавить рандомное количество точек");
-        addRandomPoints.setBounds(2,50,300,25);
+        addRandomPoints.setBounds(2, 50, 300, 25);
         butPanel.add(addRandomPoints);
         JLabel X = new JLabel("X:");
-        X.setBounds(2,25,15,25);
+        X.setBounds(2, 25, 15, 25);
         butPanel.add(X);
         JLabel Y = new JLabel("Y:");
-        Y.setBounds(45,25,15,25);
+        Y.setBounds(45, 25, 15, 25);
         butPanel.add(Y);
         JLabel N = new JLabel("NUM:");
-        N.setBounds(2,70,30,25);
+        N.setBounds(2, 70, 30, 25);
         butPanel.add(N);
         final JTextField x = new JTextField();
-        x.setBounds(17,25, 25,25);
+        x.setBounds(17, 25, 25, 25);
         butPanel.add(x);
         final JTextField y = new JTextField();
-        y.setBounds(60,25, 25,25);
+        y.setBounds(60, 25, 25, 25);
         butPanel.add(y);
         final JTextField n = new JTextField();
-        n.setBounds(35,70,25,25);
+        n.setBounds(35, 70, 25, 25);
         butPanel.add(n);
 
 
-
         JButton button1 = new JButton("Добавить точку");
-        button1.setBounds(2,100,160,40);
+        button1.setBounds(2, 100, 160, 40);
         butPanel.add(button1);
-        button1.addActionListener(new ActionListener(){
+        button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int X = (!x.getText().equals("")?Integer.parseInt(x.getText()):0);
-                int Y= (!y.getText().equals("")?Integer.parseInt(y.getText()):0);
-                int N = (!n.getText().equals("")?Integer.parseInt(n.getText()):0);
-                if ((X>0)&&(Y>0)) {
+                int X = (!x.getText().equals("") ? Integer.parseInt(x.getText()) : 0);
+                int Y = (!y.getText().equals("") ? Integer.parseInt(y.getText()) : 0);
+                int N = (!n.getText().equals("") ? Integer.parseInt(n.getText()) : 0);
+                if ((X > 0) && (Y > 0)) {
                     Point b = new Point(X, Y);
                     points.add(b);
-                    b.setBounds(b.x,b.y,b.x+3,b.y+3);
+                    b.setBounds(b.x, b.y, b.x + 3, b.y + 3);
                     pointpane.add(b);
                     pointpane.revalidate();
                     pointpane.repaint();
-                }
-                else {
-                    if (N>0){
-                        for (int i=0;i<N;i++){
-                            Point b = new Point((int)(Math.random()*(frame.getWidth()-250)), (int)(Math.random()*frame.getHeight()));
+                } else {
+                    if (N > 0) {
+                        for (int i = 0; i < N; i++) {
+                            Point b = new Point((int) (Math.random() * (frame.getWidth() - 250)), (int) (Math.random() * frame.getHeight()));
                             points.add(b);
-                            b.setBounds(b.x,b.y,b.x+3,b.y+3);
+                            b.setBounds(b.x, b.y, b.x + 3, b.y + 3);
                             pointpane.add(b);
                             pointpane.revalidate();
                             pointpane.repaint();
@@ -85,8 +85,8 @@ public class Main {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i=0;i<points.size();i++){
-                    while(points.size() > 0) {
+                for (int i = 0; i < points.size(); i++) {
+                    while (points.size() > 0) {
                         int index = points.size() - 1;
                         Point point = points.remove(index);
                         pointpane.remove(point);
@@ -97,86 +97,57 @@ public class Main {
             }
         });
         final JLabel answerL = new JLabel("Ответ:");
-        answerL.setBounds(2,550,300,25);
+        answerL.setBounds(2, 550, 300, 25);
         butPanel.add(answerL);
 
-        button2.setBounds(2,150,160,40);
+        button2.setBounds(2, 150, 160, 40);
         butPanel.add(button2);
 
         JButton button3 = new JButton("Вывести количество точек");
         button3.addActionListener(new ActionListener() {
-                                      @Override
-                                      public void actionPerformed(ActionEvent e) {
-                                          public static void main(String args[]) throws IOException {
-                                              BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-                                              ArrayList<Line> lines = new ArrayList<>();
-                                              ArrayList<Point> points = new ArrayList<>();
-                                              String s = in.readLine();
-                                              boolean sameLines = false;
-                                              while(!(s==null || s.equals("stop"))) {
-                                                  StringTokenizer tokenizer = new StringTokenizer(s);
-                                                  Line line = new Line(
-                                                          Double.parseDouble(tokenizer.nextToken()),
-                                                          Double.parseDouble(tokenizer.nextToken()),
-                                                          Double.parseDouble(tokenizer.nextToken())
-                                                  );
-                                                  for (Line line1 : lines) {
-                                                      if(line.isSame(line1)) {
-                                                          sameLines = true;
-                                                          break;
-                                                      }
-                                                  }
-                                                  if(sameLines){
-                                                      System.out.println("INFINITY");
-                                                      break;
-                                                  }
-                                                  lines.add(line);
-                                                  s = in.readLine();
-                                              }
-                                              if(!sameLines){
-                                                  for (Line line1 : lines) {
-                                                      for (Line line2 : lines) {
-                                                          if(line2.isSame(line1)) {
-                                                              break;
-                                                          }
-                                                          Point point = line1.cross(line2);
-                                                          boolean same = false;
-                                                          if(point!=null) {
-                                                              for (Point point1 : points) {
-                                                                  if (point1.isSame(point)) {
-                                                                      same = true;
-                                                                  }
-                                                              }
-                                                              if (!same) {
-                                                                  points.add(point);
-                                                              }
-                                                          }
-                                                      }
-                                                  }
-                                                  System.out.println(points.size());
-                                              }
-                                          }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Line line1 : lines) {
+                    for (Line line2 : lines) {
+                            if (line2.isSame(line1)) {
+                                break;
+                            }
+                        Point point = line1.cross(line2);
+                        boolean same = false;
+                        if (point != null) {
+                            for (Point point1 : points) {
+                                if (point1.isSame(point)) {
+                                    same = true;
+                                }
+                            }
+                            if (!same) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                }
+                System.out.println(points.size());
+            }
+        });
 
-                                      }
-                                      });
         button3.setBounds(2,500,200,40);
         butPanel.add(button3);
 
-        JButton button4 = new JButton("Загрузить из файла");
-        button4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
+        JButton button4=new JButton("Загрузить из файла");
+        button4.addActionListener(new ActionListener(){
+@Override
+public void actionPerformed(ActionEvent e){
+        }
         });
 
         button4.setBounds(2,300,200,40);
         butPanel.add(button4);
 
-        JButton button5 = new JButton("Загрузить в файл");
+        JButton button5=new JButton("Загрузить в файл");
         button5.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
+@Override
+public void actionPerformed(ActionEvent e){
+        }
         });
 
         button5.setBounds(2,350,200,40);
@@ -188,16 +159,15 @@ public class Main {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
+        }
 
 
-
-    public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JFrame.setDefaultLookAndFeelDecorated(true);
-                createGUI();
-            }
+public static void main(String[]args){
+        javax.swing.SwingUtilities.invokeLater(new Runnable(){
+public void run(){
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        createGUI();
+        }
         });
-    }
-}
+        }
+        }

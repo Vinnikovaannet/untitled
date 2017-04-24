@@ -13,6 +13,10 @@ public class Point extends JPanel {
         this.x=x;
         this.y=y;
     }
+    Point(double x, double y){
+        this.x= (int)x;
+        this.y=(int)y;
+    }
     public void paint(Graphics g){
         g.setColor(Color.GREEN);
         g.fillRect(0,0,3,3);
