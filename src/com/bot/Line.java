@@ -50,9 +50,22 @@ public class Line  extends JPanel {
     }
 
     public void paint(Graphics g){
-        g.setColor(Color.GREEN);
-        g.fillRect(0,0,3,3);
-        g.setColor(Color.red);
+        g.setColor(Color.green);
+        if(a != 0) {
+            if (a > 0) {
+                g.drawLine(0, (int) (c/b), (int) ((700 - c/b) / a / c), 700);
+            } else {
+                if (700-c/b>c/b) {
+                    g.drawLine(0, 700-(int)(c/b), (int)700, (int)(c/b));
+                }
+                else{
+                    g.drawLine(0, (int) (c/b), (int) ((-c/b) / (a/ c)),(int) (700-c/b));
+                }
+            }
+        }
+        else
+            g.drawLine(0,(int)(c/b),700,(int)(c/b));
+        g.setColor(Color.green);
     }
 
 }
