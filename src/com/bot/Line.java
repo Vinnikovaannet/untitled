@@ -50,8 +50,10 @@ public class Line  extends JPanel {
     }
 
     public void paint(Graphics g){
-        g.setColor(Color.green);
-        if(a != 0) {
+        g.setColor(Color.BLUE);
+        Rectangle q = g.getClipBounds();
+//        g.fillRect(0,0,q.width,q.height);
+        if(a != 0 && b != 0 && c !=0) {
             if (a > 0) {
                 g.drawLine(0, (int) (c/b), (int) ((700 - c/b) / a / c), 700);
             } else {
@@ -64,6 +66,10 @@ public class Line  extends JPanel {
             }
         }
         else
+            if (a==0){
+                g.drawLine(0, (int) (c/b), (int) (c/b), 700);
+            }
+
             g.drawLine(0,(int)(c/b),700,(int)(c/b));
         g.setColor(Color.green);
     }

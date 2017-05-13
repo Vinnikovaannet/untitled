@@ -24,54 +24,62 @@ public class Main {
         pointpane.setLayout(null);
         //pointpane.setPreferredSize(new Dimension(350,700));
 
-        JLabel addPointwithCoords = new JLabel("Добавить точку по координатам");
+        JLabel addPointwithCoords = new JLabel("Добавить прямую по коэффициентам");
         addPointwithCoords.setBounds(2, 2, 300, 25);
         butPanel.add(addPointwithCoords);
-        JLabel addRandomPoints = new JLabel("Добавить рандомное количество точек");
-        addRandomPoints.setBounds(2, 50, 300, 25);
-        butPanel.add(addRandomPoints);
-        JLabel X = new JLabel("X:");
-        X.setBounds(2, 25, 15, 25);
-        butPanel.add(X);
-        JLabel Y = new JLabel("Y:");
-        Y.setBounds(45, 25, 15, 25);
-        butPanel.add(Y);
+        JLabel addRandomLines = new JLabel("Добавить рандомное количество прямых");
+        addRandomLines.setBounds(2, 50, 300, 25);
+        butPanel.add(addRandomLines);
+        JLabel A = new JLabel("A:");
+        A.setBounds(2, 25, 15, 25);
+        butPanel.add(A);
+        JLabel B = new JLabel("B:");
+        B.setBounds(45, 25, 15, 25);
+        butPanel.add(B);
+        JLabel C = new JLabel("C:");
+        C.setBounds(88, 25, 15, 25);
+        butPanel.add(C);
         JLabel N = new JLabel("NUM:");
         N.setBounds(2, 70, 30, 25);
         butPanel.add(N);
-        final JTextField x = new JTextField();
-        x.setBounds(17, 25, 25, 25);
-        butPanel.add(x);
-        final JTextField y = new JTextField();
-        y.setBounds(60, 25, 25, 25);
-        butPanel.add(y);
+        final JTextField a = new JTextField();
+        a.setBounds(17, 25, 25, 25);
+        butPanel.add(a);
+        final JTextField b = new JTextField();
+        b.setBounds(60, 25, 25, 25);
+        butPanel.add(b);
+        final JTextField c = new JTextField();
+        c.setBounds(103, 25, 25, 25);
+        butPanel.add(c);
         final JTextField n = new JTextField();
         n.setBounds(35, 70, 25, 25);
         butPanel.add(n);
 
 
-        JButton button1 = new JButton("Добавить точку");
+        JButton button1 = new JButton("Добавить прямую");
         button1.setBounds(2, 100, 160, 40);
         butPanel.add(button1);
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int X = (!x.getText().equals("") ? Integer.parseInt(x.getText()) : 0);
-                int Y = (!y.getText().equals("") ? Integer.parseInt(y.getText()) : 0);
+                int A = (!a.getText().equals("") ? Integer.parseInt(a.getText()) : 0);
+                int B = (!b.getText().equals("") ? Integer.parseInt(b.getText()) : 0);
+                int C = (!c.getText().equals("") ? Integer.parseInt(c.getText()) : 0);
                 int N = (!n.getText().equals("") ? Integer.parseInt(n.getText()) : 0);
-                if ((X > 0) && (Y > 0)) {
-                    Point b = new Point(X, Y);
-                    points.add(b);
-                    b.setBounds(b.x, b.y, b.x + 3, b.y + 3);
+                if (A != 0 && B != 0) {
+                    Line b = new Line(A, B, C);
+                    lines.add(b);
+//                    b.setBounds(b.x, b.y, b.x + 3, b.y + 3);
+                    b.setBounds(0, 0, 500, 700);
                     pointpane.add(b);
                     pointpane.revalidate();
                     pointpane.repaint();
                 } else {
                     if (N > 0) {
                         for (int i = 0; i < N; i++) {
-                            Point b = new Point((int) (Math.random() * (frame.getWidth() - 250)), (int) (Math.random() * frame.getHeight()));
-                            points.add(b);
-                            b.setBounds(b.x, b.y, b.x + 3, b.y + 3);
+                            Line b = new Line((int) (Math.random() * 21-10), (int) (Math.random() * 21-10), (int) (Math.random() * 21-10));
+                            lines.add(b);
+                            b.setBounds(0, 0, 500, 700);
                             pointpane.add(b);
                             pointpane.revalidate();
                             pointpane.repaint();
@@ -109,9 +117,9 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 for (Line line1 : lines) {
                     for (Line line2 : lines) {
-                            if (line2.isSame(line1)) {
-                                break;
-                            }
+                        if (line2.isSame(line1)) {
+                            break;
+                        }
                         Point point = line1.cross(line2);
                         boolean same = false;
                         if (point != null) {
@@ -122,53 +130,57 @@ public class Main {
                             }
                             if (!same) {
                                 points.add(point);
+                                pointpane.add(point);
                             }
                         }
 
                     }
                 }
+                pointpane.revalidate();
+                pointpane.repaint();
                 System.out.println(points.size());
             }
         });
 
-        button3.setBounds(2,500,200,40);
+
+        button3.setBounds(2, 500, 200, 40);
         butPanel.add(button3);
 
-        JButton button4=new JButton("Загрузить из файла");
-        button4.addActionListener(new ActionListener(){
-@Override
-public void actionPerformed(ActionEvent e){
-        }
+        JButton button4 = new JButton("Загрузить из файла");
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
         });
 
-        button4.setBounds(2,300,200,40);
+        button4.setBounds(2, 300, 200, 40);
         butPanel.add(button4);
 
-        JButton button5=new JButton("Загрузить в файл");
-        button5.addActionListener(new ActionListener(){
-@Override
-public void actionPerformed(ActionEvent e){
-        }
+        JButton button5 = new JButton("Загрузить в файл");
+        button5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
         });
 
-        button5.setBounds(2,350,200,40);
+        button5.setBounds(2, 350, 200, 40);
         butPanel.add(button5);
 
-        panel.add(pointpane,BorderLayout.CENTER);
-        panel.add(butPanel,BorderLayout.EAST);
+        panel.add(pointpane, BorderLayout.CENTER);
+        panel.add(butPanel, BorderLayout.EAST);
         frame.getContentPane().add(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        }
+    }
 
 
-public static void main(String[]args){
-        javax.swing.SwingUtilities.invokeLater(new Runnable(){
-public void run(){
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        createGUI();
-        }
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                createGUI();
+            }
         });
-        }
-        }
+    }
+}
