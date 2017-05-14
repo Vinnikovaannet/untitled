@@ -1,6 +1,8 @@
 package com.bot;
 
 
+import sun.security.ssl.Debug;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -58,7 +60,6 @@ public class Line extends JPanel {
     public void paint(Graphics g){
         g.setColor(Color.BLUE);
         Rectangle q = g.getClipBounds();
-
         Point centre = new Point(q.width / 2, q.height / 2);
         if (b == 0)
         {

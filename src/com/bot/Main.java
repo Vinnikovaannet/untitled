@@ -107,15 +107,15 @@ public class Main {
                     int index = points.size() - 1;
                     Point point = points.remove(index);
                     pointpane.remove(point);
-                    pointpane.repaint();
                     pointpane.revalidate();
+                    pointpane.repaint();
                 }
                 while (lines.size() > 0) {
                     int index = lines.size() - 1;
                     Line line = lines.remove(index);
                     pointpane.remove(line);
-                    pointpane.repaint();
                     pointpane.revalidate();
+                    pointpane.repaint();
                 }
                 answerL.setText("Ответ: ");
             }
@@ -144,7 +144,10 @@ public class Main {
                             }
                             if (!same) {
                                 points.add(point);
+                                point.setBounds(0, 0, 500, 700);
                                 pointpane.add(point);
+                                pointpane.revalidate();
+                                pointpane.repaint();
                             }
                         }
 
@@ -173,9 +176,7 @@ public class Main {
                     int n = nextInt();
                     for (int i = 0; i < n; i++)
                     {
-                        Line b = new Line(Math.random() * 20 * (Math.random() - 0.5),
-                                (Math.random() - 0.5) * Math.random() * 20,
-                                (Math.random() - 0.5) * Math.random() * 600);
+                        Line b = new Line(nextDouble(), nextDouble(), nextDouble());
                         lines.add(b);
                         b.setBounds(0, 0, 500, 700);
                         pointpane.add(b);
@@ -203,6 +204,12 @@ public class Main {
                     e1.printStackTrace();
                 }
                 out.println(points.size());
+
+                for (int i = 0; i < points.size(); i++)
+                {
+                    out.println("(" + points.get(i).x + "; " + points.get(i).y + ")");
+                }
+
                 out.close();
             }
         });
