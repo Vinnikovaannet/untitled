@@ -6,14 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
     private static ArrayList<Point> points = new ArrayList<>();
     private static ArrayList<Line> lines = new ArrayList<>();
 
-    public static void createGUI() {
+    public void createGUI() {
         final JFrame frame = new JFrame("Testframe");
         frame.setPreferredSize(new Dimension(700, 700));
         JPanel panel = new JPanel(new BorderLayout());
@@ -95,7 +97,7 @@ public class Main {
         answerL.setBounds(2, 550, 300, 25);
         butPanel.add(answerL);
 
-        JButton button2 = new JButton("очистить");
+        final JButton button2 = new JButton("очистить");
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,7 +123,7 @@ public class Main {
         button2.setBounds(2, 150, 160, 40);
         butPanel.add(button2);
 
-        JButton button3 = new JButton("Вывести количество точек");
+        final JButton button3 = new JButton("Вывести количество точек");
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -160,7 +162,25 @@ public class Main {
         JButton button4 = new JButton("Загрузить из файла");
         button4.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
+                button2.doClick();
+
+                try {
+                    br = new BufferedReader(new FileReader("input.txt"));
+                    int n = nextInt();
+                    for (int i = 0; i < n; i++)
+                    {
+                        Line b = new Line(nextDouble(), nextDouble(), nextDouble());
+                        lines.add(b);
+                        b.setBounds(0, 0, 500, 700);
+                        pointpane.add(b);
+                        pointpane.revalidate();
+                        pointpane.repaint();
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -170,7 +190,16 @@ public class Main {
         JButton button5 = new JButton("Загрузить в файл");
         button5.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
+                button3.doClick();
+                try {
+                    out = new PrintWriter("output.txt");
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+                out.println(points.size());
+                out.close();
             }
         });
 
@@ -185,8 +214,8 @@ public class Main {
         frame.setVisible(true);
     }
 
-
-    public static void main(String[] args) {
+    public void Start()
+    {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame.setDefaultLookAndFeelDecorated(true);
@@ -194,4 +223,27 @@ public class Main {
             }
         });
     }
+    public static void main(String[] args) {
+        new Main().Start();
+    }
+
+    BufferedReader br;
+    StringTokenizer in;
+    PrintWriter out;
+
+    public String nextToken() throws IOException {
+        while (in == null || !in.hasMoreTokens()) {
+            in = new StringTokenizer(br.readLine());
+        }
+        return in.nextToken();
+    }
+
+    public int nextInt() throws IOException {
+        return Integer.parseInt(nextToken());
+    }
+
+    public double nextDouble() throws IOException {
+        return Double.parseDouble(nextToken());
+    }
+
 }
