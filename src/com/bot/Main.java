@@ -78,7 +78,9 @@ public class Main {
                 } else {
                     if (N > 0) {
                         for (int i = 0; i < N; i++) {
-                            Line b = new Line((int) (Math.random() * 21-10), (int) (Math.random() * 21-10), (int) (Math.random() * 21-10));
+                            Line b = new Line(10 * (Math.random() - 0.5),
+                                    (Math.random() - 0.5) * 10,
+                                    (Math.random() - 0.5) * 600);
                             lines.add(b);
                             b.setBounds(0, 0, 500, 700);
                             pointpane.add(b);
