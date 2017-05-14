@@ -1,9 +1,10 @@
 package com.bot;
 
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Line  extends JPanel {
+public class Line extends JPanel {
     private double a,b,c;
 
 
@@ -49,29 +50,35 @@ public class Line  extends JPanel {
         return a * d - b * c;
     }
 
+    public Point convertPoint(Point old, Point centre)
+    {
+        return new Point(centre.x + old.x, centre.y - old.y);
+    }
+
     public void paint(Graphics g){
         g.setColor(Color.BLUE);
         Rectangle q = g.getClipBounds();
-//        g.fillRect(0,0,q.width,q.height);
-        if(a != 0 && b != 0 && c !=0) {
-            if (a > 0) {
-                g.drawLine(0, (int) (c/b), (int) ((700 - c/b) / a / c), 700);
-            } else {
-                if (700-c/b>c/b) {
-                    g.drawLine(0, 700-(int)(c/b), (int)700, (int)(c/b));
-                }
-                else{
-                    g.drawLine(0, (int) (c/b), (int) ((-c/b) / (a/ c)),(int) (700-c/b));
-                }
-            }
+
+        Point centre = new Point(q.width / 2, q.height / 2);
+        if (b == 0)
+        {
+            Point first = convertPoint(new Point(-c / a, -q.height), centre);
+            Point second = convertPoint(new Point(-c / a, q.height), centre);
+            g.drawLine(first.x, first.y, second.x, second.y);
         }
         else
-            if (a==0){
-                g.drawLine(0, (int) (c/b), (int) (c/b), 700);
-            }
+        {
+            Point first = convertPoint(new Point(-q.width, q.width * a / b - c / b), centre);
+            Point second = convertPoint(new Point(q.width, -q.width * a / b - c / b), centre);
+            g.drawLine(first.x, first.y, second.x, second.y);
+        }
 
-            g.drawLine(0,(int)(c/b),700,(int)(c/b));
         g.setColor(Color.green);
+
+        centre = new Point(q.width / 2, q.height / 2);
+        g.setColor(Color.BLACK);
+        g.drawLine(0, centre.y, q.width, centre.y);
+        g.drawLine(centre.x, 0, centre.x, q.height);
     }
 
 }

@@ -57,8 +57,7 @@ public class Main {
 
 
         JButton button1 = new JButton("Добавить прямую");
-        button1.setBounds(2, 100, 160, 40);
-        butPanel.add(button1);
+
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,7 +65,7 @@ public class Main {
                 int B = (!b.getText().equals("") ? Integer.parseInt(b.getText()) : 0);
                 int C = (!c.getText().equals("") ? Integer.parseInt(c.getText()) : 0);
                 int N = (!n.getText().equals("") ? Integer.parseInt(n.getText()) : 0);
-                if (A != 0 && B != 0) {
+                if (A != 0 || B != 0) {
                     Line b = new Line(A, B, C);
                     lines.add(b);
 //                    b.setBounds(b.x, b.y, b.x + 3, b.y + 3);
@@ -89,24 +88,35 @@ public class Main {
 
             }
         });
+        button1.setBounds(2, 100, 160, 40);
+        butPanel.add(button1);
+
+        final JLabel answerL = new JLabel("Ответ:");
+        answerL.setBounds(2, 550, 300, 25);
+        butPanel.add(answerL);
+
         JButton button2 = new JButton("очистить");
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < points.size(); i++) {
-                    while (points.size() > 0) {
-                        int index = points.size() - 1;
-                        Point point = points.remove(index);
-                        pointpane.remove(point);
-                        pointpane.repaint();
-                        pointpane.revalidate();
-                    }
+                while (points.size() > 0) {
+                    int index = points.size() - 1;
+                    Point point = points.remove(index);
+                    pointpane.remove(point);
+                    pointpane.repaint();
+                    pointpane.revalidate();
                 }
+                while (lines.size() > 0) {
+                    int index = lines.size() - 1;
+                    Line line = lines.remove(index);
+                    pointpane.remove(line);
+                    pointpane.repaint();
+                    pointpane.revalidate();
+                }
+                answerL.setText("Ответ: ");
             }
         });
-        final JLabel answerL = new JLabel("Ответ:");
-        answerL.setBounds(2, 550, 300, 25);
-        butPanel.add(answerL);
+
 
         button2.setBounds(2, 150, 160, 40);
         butPanel.add(button2);
@@ -139,6 +149,7 @@ public class Main {
                 pointpane.revalidate();
                 pointpane.repaint();
                 System.out.println(points.size());
+                answerL.setText("Ответ: " + points.size());
             }
         });
 
