@@ -171,7 +171,9 @@ public class Main {
                     int n = nextInt();
                     for (int i = 0; i < n; i++)
                     {
-                        Line b = new Line(nextDouble(), nextDouble(), nextDouble());
+                        Line b = new Line(Math.random() * 20 * (Math.random() - 0.5),
+                                (Math.random() - 0.5) * Math.random() * 20,
+                                (Math.random() - 0.5) * Math.random() * 600);
                         lines.add(b);
                         b.setBounds(0, 0, 500, 700);
                         pointpane.add(b);
